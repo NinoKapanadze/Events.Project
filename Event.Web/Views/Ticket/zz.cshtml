@@ -1,0 +1,43 @@
+﻿@using Events.Application.Eventz.Models
+
+@model EventDeepLookModel
+
+<h1>Reserve a Ticket</h1>
+
+@if (!string.IsNullOrEmpty(Model.Title))
+{
+    <p>Ticket reserved! Ticket ID: @Model</p>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GetTicket">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Title" class="control-label"></label>
+                <input asp-for="@Model.Title" class="form-control" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+          
+          
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<form method="post" asp-controller="Ticket" asp-action="GetTicket">
+    <input type="hidden" name="eventName" value="@ViewBag.EventName" />
+    <button type="submit">Reserve Ticket</button>
+</form>
